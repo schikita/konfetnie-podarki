@@ -574,8 +574,45 @@ section {
 
 /* Секция с текстом */
 .step3-text-section {
-  padding: 4rem 0;
   position: relative;
+  padding: 4rem 0;
+
+  /* Фото-фон */
+  background-image: url("../img/sec-3.jpg"); /* подставь свой путь */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Чтобы фото двигалось естественно */
+  background-attachment: scroll;
+}
+
+/* Затемнение (очень мягкое и премиальное) */
+.step3-text-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: 
+      linear-gradient(
+        to bottom,
+        rgba(9, 13, 27, 0.671),
+        rgba(9, 13, 27, 0.685)
+      ),
+      radial-gradient(
+        circle at 20% 20%,
+        rgba(249, 115, 22, 0.09),
+        transparent 60%
+      );
+
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Контент должен быть поверх затемнения */
+.step3-text-section .container {
+  position: relative;
+  z-index: 2;
 }
 
 /* КОЛЛАЖ — премиальная раскладка */
@@ -702,6 +739,71 @@ section {
     opacity: 0;
   }
 }
+
+.collage-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+.collage-modal.open {
+  display: flex;
+}
+
+.collage-modal-img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.collage-close {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  font-size: 3rem;
+  cursor: pointer;
+  color: #fff;
+  z-index: 10001;
+}
+
+.collage-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3rem;
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.collage-nav:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.collage-nav.prev { left: 2rem; }
+.collage-nav.next { right: 2rem; }
+
+@media (max-width: 600px) {
+  .collage-nav {
+    font-size: 2.2rem;
+  }
+}
+
 
 
 

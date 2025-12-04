@@ -612,3 +612,59 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const collageItems = document.querySelectorAll(".step3-collage .collage-item img");
+
+  const modal = document.getElementById("collageModal");
+  const modalImg = document.getElementById("collageModalImg");
+  const closeBtn = document.querySelector(".collage-close");
+  const nextBtn = document.querySelector(".collage-nav.next");
+  const prevBtn = document.querySelector(".collage-nav.prev");
+
+  let currentIndex = 0;
+  let images = [];
+
+  // Собираем пути всех изображений коллажа
+  images = Array.from(collageItems).map(img => img.src);
+
+  // Открытие
+  collageItems.forEach((img, index) => {
+    img.addEventListener("click", () => {
+      currentIndex = index;
+      modalImg.src = images[currentIndex];
+      modal.classList.add("open");
+    });
+  });
+
+  // Закрытие
+  closeBtn.addEventListener("click", () => modal.classList.remove("open"));
+  modal.addEventListener("click", e => {
+    if (e.target === modal) modal.classList.remove("open");
+  });
+
+  // Навигация
+  function showNext() {
+    currentIndex = (currentIndex + 1) % images.length;
+    modalImg.src = images[currentIndex];
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    modalImg.src = images[currentIndex];
+  }
+
+  nextBtn.addEventListener("click", showNext);
+  prevBtn.addEventListener("click", showPrev);
+
+  // Клавиатура
+  document.addEventListener("keydown", e => {
+    if (!modal.classList.contains("open")) return;
+
+    if (e.key === "ArrowRight") showNext();
+    if (e.key === "ArrowLeft") showPrev();
+    if (e.key === "Escape") modal.classList.remove("open");
+  });
+});
+
