@@ -1790,3 +1790,62 @@ section {
     scroll-behavior: auto !important;
   }
 }
+
+/* ===== STEP 1 AUDIO PLAYER ===== */
+
+.step1-audio-player {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.step1-audio-player .audio-card {
+  max-width: 420px;
+  width: 100%;
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  background: radial-gradient(
+      circle at 0 0,
+      rgba(249, 115, 22, 0.15),
+      transparent 60%
+    ),
+    rgba(15, 23, 42, 0.98);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.step1-audio-player .audio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.9);
+}
+
+.step1-audio-player .audio-name {
+  font-size: 1rem;
+  font-weight: 600;
+  z-index: 1;
+  color: #ffffff;
+}
+
+.step1-audio-player .audio-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  z-index: 1;
+}
+
+.step1-audio-player .audio-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  z-index: 1;
+}
+
+@media (max-width: 540px) {
+  .step1-audio-player .audio-card {
+    max-width: 100%;
+  }
+}
