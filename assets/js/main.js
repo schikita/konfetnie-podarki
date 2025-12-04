@@ -99,75 +99,40 @@
     revealEls.forEach((el) => el.classList.add("visible"));
   }
 
-  // ===== FADE SLIDER (STEP 2) =====
-  const fadeSlider = qs("#fadeSlider");
-  if (fadeSlider) {
-    const slides = qsa(".fade-slide", fadeSlider);
-    const dots = qsa(".slider-dot", fadeSlider);
-    const prevBtn = qs(".slider-btn[data-dir='prev']", fadeSlider);
-    const nextBtn = qs(".slider-btn[data-dir='next']", fadeSlider);
-    let current = 0;
-    let fadeTimer;
-    let isAutoPlay = true;
+ // ===== STEP 2 GALLERY SLIDER =====
+  const step2Slider = document.querySelector(".step2-gallery-slider");
+  if (step2Slider) {
+    const images = step2Slider.querySelectorAll(".gs-img");
+    const dots = step2Slider.querySelectorAll(".gs-dot");
+    const prevBtn = step2Slider.querySelector(".gs-btn.prev");
+    const nextBtn = step2Slider.querySelector(".gs-btn.next");
+    let currentSlide = 0;
 
-    function showSlide(idx) {
-      if (!slides.length) return;
-      current = (idx + slides.length) % slides.length;
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === current);
-      });
-      dots.forEach((dot, i) => {
-        dot.classList.toggle("active", i === current);
-      });
+    function showSlide(n) {
+      images.forEach((img) => img.classList.remove("active"));
+      dots.forEach((dot) => dot.classList.remove("active"));
+      images[n].classList.add("active");
+      dots[n].classList.add("active");
     }
 
-    function next() {
-      showSlide(current + 1);
-    }
+    nextBtn?.addEventListener("click", () => {
+      currentSlide = (currentSlide + 1) % images.length;
+      showSlide(currentSlide);
+    });
 
-    function prev() {
-      showSlide(current - 1);
-    }
+    prevBtn?.addEventListener("click", () => {
+      currentSlide = (currentSlide - 1 + images.length) % images.length;
+      showSlide(currentSlide);
+    });
 
-    function restartTimer() {
-      if (fadeTimer) window.clearInterval(fadeTimer);
-      if (isAutoPlay) {
-        fadeTimer = window.setInterval(next, 8000);
-      }
-    }
-
-    dots.forEach((dot) => {
+    dots.forEach((dot, idx) => {
       dot.addEventListener("click", () => {
-        const t = Number(dot.dataset.target || "0");
-        showSlide(t);
-        restartTimer();
+        currentSlide = idx;
+        showSlide(currentSlide);
       });
     });
-
-    prevBtn &&
-      prevBtn.addEventListener("click", () => {
-        prev();
-        restartTimer();
-      });
-
-    nextBtn &&
-      nextBtn.addEventListener("click", () => {
-        next();
-        restartTimer();
-      });
-
-    // Pause on hover
-    fadeSlider.addEventListener("mouseenter", () => {
-      if (fadeTimer) window.clearInterval(fadeTimer);
-    });
-
-    fadeSlider.addEventListener("mouseleave", () => {
-      restartTimer();
-    });
-
-    showSlide(0);
-    restartTimer();
   }
+
 
   // ===== AUDIO PLAYERS =====
   let currentAudio = null;
