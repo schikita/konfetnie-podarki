@@ -536,6 +536,13 @@ video {
 
 /* Sections common */
 
+.section-steps {
+  background: url('../img/technology-bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size:cover;
+}
+
 section {
   padding: 5rem 0;
   position: relative;
@@ -547,7 +554,7 @@ section {
 }
 
 .section-kicker {
-  font-size: 0.7rem;
+  font-size: 1.7rem;
   text-transform: uppercase;
   letter-spacing: 0.16em;
   color: #fde68a;
@@ -582,6 +589,8 @@ section {
 
 /* Steps: сплит-карточки с фоном */
 
+
+
 .steps-grid--split {
   /* на десктопе сетка 2×2 вместо 4 колонок */
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -593,7 +602,7 @@ section {
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.7fr);
   gap: 1rem;
   align-items: stretch;
-  padding: 1.2rem 1.2rem 1.3rem;
+  padding: 1.2rem 1.2rem 1.3rem;  
 }
 
 /* Левая колонка под фон / фото */
@@ -604,6 +613,16 @@ section {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  .step-card-media[data-img] {
+  background-image: var(--dynamic-bg);
+}
+
+
+  /* ВАЖНО — вот это фиксирует 4:3 */
+  aspect-ratio: 4 / 3;
+
+  /* Если хочешь минимальную высоту – можно оставить: */
   min-height: 180px;
 }
 
@@ -623,7 +642,15 @@ section {
 /* Правая колонка с текстом */
 .step-card-body {
   display: flex;
-  align-items: center;
+  align-items: center; 
+  
+}
+
+.step-text {
+  text-shadow: 2px 1px 1px #000;
+  background: #00000036;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 /* Примеры фонов (подставишь свои картинки) */
@@ -644,16 +671,123 @@ section {
 }
 
 
+/* ===== MODAL GALLERY ===== */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+  z-index: 9999;
+}
+
+.modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  animation: fadeIn .45s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.94);}
+  to   {opacity: 1; transform: scale(1);}
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+
+/* CLOSE BUTTON */
+.modal-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  backdrop-filter: blur(6px);
+  transition: background .2s;
+}
+
+.modal-close:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* ARROWS */
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background .2s;
+}
+
+.modal-nav:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.modal-nav.prev { left: -60px; }
+.modal-nav.next { right: -60px; }
+
+@media(max-width: 600px){
+  .modal-nav.prev { left: -40px; }
+  .modal-nav.next { right: -40px; }
+}
+
+
+
+
+
+
 /* Fade Slider (Factory scenes) */
 
 .section-fade-slider {
-  background: radial-gradient(
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(2, 6, 23, 0.548),
+      rgba(2, 6, 23, 0.658)
+    ),
+    radial-gradient(
       circle at 80% 0,
       rgba(248, 113, 113, 0.15),
       transparent 55%
     ),
-    #020617;
+    url("../img/bird-bg.jpg");  /* ← ТВОЙ ФОН */
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
 
 .fade-slider {
   max-width: 960px;
@@ -672,62 +806,73 @@ section {
 
 .fade-slider-inner {
   position: relative;
-  min-height: 280px;
 }
 
+/* Один слайд активен, остальные скрыты */
 .fade-slide {
-  position: absolute;
-  inset: 0;
+  display: none;
   padding: 1.4rem 1.5rem 1.5rem;
-  display: flex;
-  flex-direction: row;
-  gap: 1.4rem;
+  /* В разметке сначала media, потом content.
+     Нам нужно: текст сверху, фото снизу → переворачиваем колонку */
+  flex-direction: column-reverse;
+  gap: 1rem;
   opacity: 0;
-  pointer-events: none;
-  transform: scale(1.02);
-  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
 .fade-slide.active {
+  display: flex;
   opacity: 1;
-  pointer-events: auto;
-  transform: scale(1);
+  animation: fadeSlideIn 0.6s ease;
 }
 
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Фото-блок 4:3 снизу */
 .fade-slide-media {
-  flex: 1.15;
+  width: 100%;
   border-radius: 1.2rem;
   overflow: hidden;
   position: relative;
   background: #020617;
+  aspect-ratio: 16 / 9; /* ↓ ниже, чем 4:3 */
 }
 
 .fade-slide-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(1.2);
-  transform: scale(1.02);
+  filter: saturate(1.15);
+  transform: scale(1.03);
   transition: transform 5s ease;
 }
 
 .fade-slide.active .fade-slide-media img {
-  transform: scale(1.08);
+  transform: scale(1.1);
 }
 
 .fade-slide-media::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(15, 23, 42, 0.7), transparent);
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.6), transparent);
   mix-blend-mode: multiply;
 }
 
+/* Текстовый блок сверху */
+
 .fade-slide-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .fade-slide-tag {
@@ -755,6 +900,8 @@ section {
   color: #e5e7eb;
   opacity: 0.8;
 }
+
+/* Контролы снизу */
 
 .slider-controls {
   display: flex;
@@ -820,6 +967,7 @@ section {
   background: rgba(15, 23, 42, 1);
   transform: translateY(-1px);
 }
+
 
 /* Candy Carousel + Grid */
 

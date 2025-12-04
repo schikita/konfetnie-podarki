@@ -58,7 +58,7 @@
   });
   backToTop &&
     backToTop.addEventListener("click", () => {
-      scrollToTarget("#top");
+      scrollToTarget("#hero");
     });
 
   // Reveal on scroll
@@ -129,7 +129,7 @@
 
     function restartTimer() {
       if (fadeTimer) window.clearInterval(fadeTimer);
-      fadeTimer = window.setInterval(next, 7000);
+      fadeTimer = window.setInterval(next, 30000);
     }
 
     restartTimer();
@@ -353,3 +353,71 @@
 })();
 
 
+// Устанавливаем фон для step-card-media из data-img
+document.querySelectorAll(".step-card-media").forEach((el) => {
+    const url = el.dataset.img;
+    el.style.backgroundImage = `url("${url}")`;
+});
+
+
+// === Modal Gallery ===
+const modal = document.getElementById("photoModal");
+const modalImg = document.getElementById("modalImage");
+const closeBtn = document.querySelector(".modal-close");
+const nextBtn = document.querySelector(".modal-nav.next");
+const prevBtn = document.querySelector(".modal-nav.prev");
+
+// Собираем все фото фонов
+const mediaBlocks = document.querySelectorAll(".step-card-media");
+
+// Массив путей к фоновым картинкам
+const images = Array.from(mediaBlocks).map(el => el.dataset.img);
+
+
+let currentIndex = 0;
+
+// Открыть модалку
+function openModal(index) {
+  currentIndex = index;
+  modalImg.src = images[index];
+  modal.classList.add("open");
+}
+
+// Закрыть
+function closeModal() {
+  modal.classList.remove("open");
+}
+
+// Переключение
+function showNext() {
+  currentIndex = (currentIndex + 1) % images.length;
+  modalImg.src = images[currentIndex];
+}
+
+function showPrev() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  modalImg.src = images[currentIndex];
+}
+
+// События
+mediaBlocks.forEach((block, index) => {
+  block.addEventListener("click", () => openModal(index));
+});
+
+closeBtn.addEventListener("click", closeModal);
+
+nextBtn.addEventListener("click", showNext);
+prevBtn.addEventListener("click", showPrev);
+
+// Закрытие по клику вне контента
+modal.addEventListener("click", e => {
+  if (e.target === modal) closeModal();
+});
+
+// Закрытие по ESC
+document.addEventListener("keydown", e => {
+  if (!modal.classList.contains("open")) return;
+  if (e.key === "Escape") closeModal();
+  if (e.key === "ArrowRight") showNext();
+  if (e.key === "ArrowLeft") showPrev();
+});
