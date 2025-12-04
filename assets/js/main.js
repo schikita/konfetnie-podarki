@@ -1,8 +1,10 @@
 (function () {
+  "use strict";
+
   const qs = (sel, ctx = document) => ctx.querySelector(sel);
   const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-  // Smooth scroll
+  // ===== SMOOTH SCROLL =====
   function scrollToTarget(target) {
     const el = typeof target === "string" ? qs(target) : target;
     if (!el) return;
@@ -30,7 +32,7 @@
     });
   });
 
-  // Burger menu
+  // ===== BURGER MENU =====
   const navBurger = qs("#navBurger");
   const navLinks = qs("#navLinks");
 
@@ -45,24 +47,41 @@
       navBurger.classList.toggle("active");
       navLinks.classList.toggle("open");
     });
+
+    // Закрытие меню при клике вне его
+    document.addEventListener("click", (e) => {
+      if (!navBurger.contains(e.target) && !navLinks.contains(e.target)) {
+        closeMobileNav();
+      }
+    });
   }
 
-  // Back to top
+  // ===== BACK TO TOP =====
   const backToTop = qs("#backToTop");
+  let ticking = false;
+
   window.addEventListener("scroll", () => {
-    const y = window.scrollY || window.pageYOffset;
-    if (backToTop) {
-      if (y > 400) backToTop.classList.add("visible");
-      else backToTop.classList.remove("visible");
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const y = window.scrollY || window.pageYOffset;
+        if (backToTop) {
+          if (y > 400) backToTop.classList.add("visible");
+          else backToTop.classList.remove("visible");
+        }
+        ticking = false;
+      });
+      ticking = true;
     }
   });
+
   backToTop &&
     backToTop.addEventListener("click", () => {
       scrollToTarget("#hero");
     });
 
-  // Reveal on scroll
+  // ===== REVEAL ON SCROLL =====
   const revealEls = qsa(".reveal");
+  
   if ("IntersectionObserver" in window) {
     const obs = new IntersectionObserver(
       (entries) => {
@@ -73,14 +92,14 @@
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15, rootMargin: "50px" }
     );
     revealEls.forEach((el) => obs.observe(el));
   } else {
     revealEls.forEach((el) => el.classList.add("visible"));
   }
 
-  // Fade slider
+  // ===== FADE SLIDER (STEP 2) =====
   const fadeSlider = qs("#fadeSlider");
   if (fadeSlider) {
     const slides = qsa(".fade-slide", fadeSlider);
@@ -89,6 +108,7 @@
     const nextBtn = qs(".slider-btn[data-dir='next']", fadeSlider);
     let current = 0;
     let fadeTimer;
+    let isAutoPlay = true;
 
     function showSlide(idx) {
       if (!slides.length) return;
@@ -104,8 +124,16 @@
     function next() {
       showSlide(current + 1);
     }
+
     function prev() {
       showSlide(current - 1);
+    }
+
+    function restartTimer() {
+      if (fadeTimer) window.clearInterval(fadeTimer);
+      if (isAutoPlay) {
+        fadeTimer = window.setInterval(next, 8000);
+      }
     }
 
     dots.forEach((dot) => {
@@ -121,121 +149,27 @@
         prev();
         restartTimer();
       });
+
     nextBtn &&
       nextBtn.addEventListener("click", () => {
         next();
         restartTimer();
       });
 
-    function restartTimer() {
+    // Pause on hover
+    fadeSlider.addEventListener("mouseenter", () => {
       if (fadeTimer) window.clearInterval(fadeTimer);
-      fadeTimer = window.setInterval(next, 30000);
-    }
+    });
 
+    fadeSlider.addEventListener("mouseleave", () => {
+      restartTimer();
+    });
+
+    showSlide(0);
     restartTimer();
   }
 
-  // Candy carousel (horizontal slider)
-  const carousel = qs("#candyCarousel");
-  if (carousel) {
-    const track = qs(".carousel-track", carousel);
-    const items = qsa(".carousel-item", carousel);
-    const dots = qsa("#carouselDots .carousel-dot");
-    const prevBtn = qs("#carouselPrev");
-    const nextBtn = qs("#carouselNext");
-    let current = 0;
-    let autoTimer;
-
-    function updateCarousel() {
-      if (!track || !items.length) return;
-      const offset = -current * 100;
-      track.style.transform = `translateX(${offset}%)`;
-      items.forEach((item, i) =>
-        item.classList.toggle("active", i === current)
-      );
-      dots.forEach((dot, i) => dot.classList.toggle("active", i === current));
-    }
-
-    function goTo(idx) {
-      const len = items.length;
-      current = (idx + len) % len;
-      updateCarousel();
-    }
-
-    prevBtn &&
-      prevBtn.addEventListener("click", () => {
-        goTo(current - 1);
-        restartAuto();
-      });
-    nextBtn &&
-      nextBtn.addEventListener("click", () => {
-        goTo(current + 1);
-        restartAuto();
-      });
-
-    dots.forEach((dot) => {
-      dot.addEventListener("click", () => {
-        const t = Number(dot.dataset.target || "0");
-        goTo(t);
-        restartAuto();
-      });
-    });
-
-    function restartAuto() {
-      if (autoTimer) window.clearInterval(autoTimer);
-      autoTimer = window.setInterval(() => goTo(current + 1), 6000);
-    }
-
-    updateCarousel();
-    restartAuto();
-  }
-
-  // Custom video player
-  const video = qs("#factoryVideo");
-  const playBtn = qs("#videoPlayBtn");
-  const progress = qs("#videoProgress");
-  const timeLabel = qs("#videoTime");
-
-  function formatTime(sec) {
-    const s = Math.floor(sec);
-    const m = Math.floor(s / 60);
-    const r = s % 60;
-    return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
-  }
-
-  if (video && playBtn && progress && timeLabel) {
-    playBtn.addEventListener("click", () => {
-      if (video.paused) {
-        video.play();
-      } else {
-        video.pause();
-      }
-    });
-
-    video.addEventListener("play", () => {
-      playBtn.textContent = "⏸";
-    });
-
-    video.addEventListener("pause", () => {
-      playBtn.textContent = "▶";
-    });
-
-    video.addEventListener("timeupdate", () => {
-      if (video.duration) {
-        const percent = (video.currentTime / video.duration) * 100;
-        progress.value = percent;
-        timeLabel.textContent = formatTime(video.currentTime);
-      }
-    });
-
-    progress.addEventListener("input", () => {
-      if (!video.duration) return;
-      const pct = Number(progress.value) / 100;
-      video.currentTime = video.duration * pct;
-    });
-  }
-
-  // Audio players
+  // ===== AUDIO PLAYERS =====
   let currentAudio = null;
   let currentCard = null;
   const audioCards = qsa(".audio-card");
@@ -244,10 +178,14 @@
     const audioId = card.getAttribute("data-audio-id");
     const audioEl = audioId ? qs("#" + audioId) : null;
     if (!audioEl) return;
+    
     const btn = qs(".audio-btn", card);
     const slider = qs(".audio-slider", card);
+    if (!btn || !slider) return;
 
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      
       if (currentAudio && currentAudio !== audioEl) {
         currentAudio.pause();
         if (currentCard) {
@@ -257,6 +195,7 @@
           if (s) s.value = 0;
         }
       }
+
       if (audioEl.paused) {
         audioEl.play();
         btn.textContent = "⏸";
@@ -288,34 +227,40 @@
         currentCard = null;
       }
     });
+
+    audioEl.addEventListener("error", () => {
+      console.warn(`Audio error: ${audioId}`);
+      btn.textContent = "✕";
+      btn.disabled = true;
+    });
   }
 
   audioCards.forEach(bindAudioCard);
 
-
-    function startLiveHeadline() {
+  // ===== LIVE HEADLINE =====
+  function startLiveHeadline() {
     const container = document.getElementById("liveHeadline");
     if (!container) return;
 
     const text = "ЖИВОЙ РЕПОРТАЖ";
     container.innerHTML = "";
-    const chars = [...text]; // корректно для кириллицы и пробелов
+    const chars = [...text];
 
     chars.forEach((ch, index) => {
       const span = document.createElement("span");
-      span.textContent = ch === " " ? "\u00A0" : ch; // неразрывный пробел
+      span.textContent = ch === " " ? "\u00A0" : ch;
       container.appendChild(span);
 
       setTimeout(() => {
         span.classList.add("visible");
-      }, 80 * index); // скорость «набора»
+      }, 80 * index);
     });
   }
 
+  // ===== CANDY RAIN =====
   function initCandyRain() {
     const rain = document.getElementById("candyRain");
     if (!rain) {
-      // если контейнера нет — просто запускаем заголовок
       startLiveHeadline();
       return;
     }
@@ -328,8 +273,8 @@
       el.className = "candy";
       el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
 
-      const delay = Math.random() * 0.8;              // 0–0.8 сек
-      const duration = 1.8 + Math.random() * 1.2;     // ~1.8–3 сек
+      const delay = Math.random() * 0.8;
+      const duration = 1.8 + Math.random() * 1.2;
 
       el.style.left = Math.random() * 100 + "vw";
       el.style.animationDelay = delay + "s";
@@ -338,185 +283,332 @@
       rain.appendChild(el);
     }
 
-    // через ~3 секунды плавно убираем дождь и запускаем заголовок
     setTimeout(() => {
       rain.classList.add("candy-rain--hide");
       startLiveHeadline();
       setTimeout(() => {
-        rain.remove();
+        rain.style.display = "none";
       }, 800);
     }, 3100);
   }
 
-  // запускаем сразу, скрипт внизу страницы — DOM уже есть
-  initCandyRain();
-})();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCandyRain);
+  } else {
+    initCandyRain();
+  }
 
-
-// Устанавливаем фон для step-card-media из data-img
-document.querySelectorAll(".step-card-media").forEach((el) => {
+  // ===== STEP CARD MEDIA BACKGROUNDS =====
+  document.querySelectorAll(".step-card-media").forEach((el) => {
     const url = el.dataset.img;
-    el.style.backgroundImage = `url("${url}")`;
-});
-
-
-// === Modal Gallery ===
-const modal = document.getElementById("photoModal");
-const modalImg = document.getElementById("modalImage");
-const closeBtn = document.querySelector(".modal-close");
-const nextBtn = document.querySelector(".modal-nav.next");
-const prevBtn = document.querySelector(".modal-nav.prev");
-
-// Собираем все фото фонов
-const mediaBlocks = document.querySelectorAll(".step-card-media");
-
-// Массив путей к фоновым картинкам
-const images = Array.from(mediaBlocks).map(el => el.dataset.img);
-
-
-let currentIndex = 0;
-
-// Открыть модалку
-function openModal(index) {
-  currentIndex = index;
-  modalImg.src = images[index];
-  modal.classList.add("open");
-}
-
-// Закрыть
-function closeModal() {
-  modal.classList.remove("open");
-}
-
-// Переключение
-function showNext() {
-  currentIndex = (currentIndex + 1) % images.length;
-  modalImg.src = images[currentIndex];
-}
-
-function showPrev() {
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  modalImg.src = images[currentIndex];
-}
-
-// События
-mediaBlocks.forEach((block, index) => {
-  block.addEventListener("click", () => openModal(index));
-});
-
-closeBtn.addEventListener("click", closeModal);
-
-nextBtn.addEventListener("click", showNext);
-prevBtn.addEventListener("click", showPrev);
-
-// Закрытие по клику вне контента
-modal.addEventListener("click", e => {
-  if (e.target === modal) closeModal();
-});
-
-// Закрытие по ESC
-document.addEventListener("keydown", e => {
-  if (!modal.classList.contains("open")) return;
-  if (e.key === "Escape") closeModal();
-  if (e.key === "ArrowRight") showNext();
-  if (e.key === "ArrowLeft") showPrev();
-});
-
-
-// ============================
-// КАРУСЕЛЬ ПРОЕКТОВ
-// ============================
-
-(function setupProjectsCarousel() {
-  const viewport = document.querySelector("#projects .projects-viewport");
-  if (!viewport) return;
-
-  const stage = viewport.querySelector(".projects-stage");
-  if (!stage) return;
-
-  const cards = Array.from(stage.querySelectorAll(".project-card"));
-  if (!cards.length) return;
-
-  const dotsWrap = viewport.querySelector(".pr-dots");
-  const prevBtn = viewport.querySelector(".prev");
-  const nextBtn = viewport.querySelector(".next");
-
-  if (!dotsWrap) return;
-
-  let i = 0;
-  let timer = null;
-  const interval = +(viewport.dataset.interval || 5000);
-  const autoplay = viewport.dataset.autoplay !== "false";
-  const reduce =
-    window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  dotsWrap.innerHTML = cards.map(() => "<i></i>").join("");
-  const dots = Array.from(dotsWrap.children);
-
-  const show = (idx) => {
-    i = (idx + cards.length) % cards.length;
-    cards.forEach((c, k) => c.classList.toggle("is-active", k === i));
-    dots.forEach((d, k) => d.classList.toggle("is-on", k === i));
-  };
-
-  const next = () => show(i + 1);
-  const prev = () => show(i - 1);
-
-  const stop = () => {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
-    }
-  };
-
-  const play = () => {
-    if (reduce || !autoplay) return;
-    stop();
-    timer = setInterval(next, interval);
-  };
-
-  show(0);
-  play();
-
-  nextBtn &&
-    nextBtn.addEventListener("click", () => {
-      next();
-      play();
-    });
-  prevBtn &&
-    prevBtn.addEventListener("click", () => {
-      prev();
-      play();
-    });
-
-  dotsWrap.addEventListener("click", (e) => {
-    const idx = dots.indexOf(e.target);
-    if (idx > -1) {
-      show(idx);
-      play();
+    if (url) {
+      el.style.backgroundImage = `url("${url}")`;
     }
   });
 
-  viewport.addEventListener("mouseenter", stop);
-  viewport.addEventListener("mouseleave", play);
-  viewport.addEventListener("focusin", stop);
-  viewport.addEventListener("focusout", play);
+  // ===== MODAL GALLERY =====
+  const modal = document.getElementById("photoModal");
+  const modalImg = document.getElementById("modalImage");
+  const closeBtn = document.querySelector(".modal-close");
+  const nextBtn = document.querySelector(".modal-nav.next");
+  const prevBtn = document.querySelector(".modal-nav.prev");
 
-  if (supportsIO()) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target !== viewport) return;
-          if (entry.isIntersecting) {
+  if (modal && modalImg && closeBtn && nextBtn && prevBtn) {
+    const mediaBlocks = document.querySelectorAll(".step-card-media");
+    const images = Array.from(mediaBlocks).map((el) => el.dataset.img).filter(Boolean);
+    let currentIndex = 0;
+
+    function openModal(index) {
+      if (index < 0 || index >= images.length) return;
+      currentIndex = index;
+      modalImg.src = images[index];
+      modalImg.alt = `Фотография ${index + 1}`;
+      modal.classList.add("open");
+    }
+
+    function closeModal() {
+      modal.classList.remove("open");
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % images.length;
+      modalImg.src = images[currentIndex];
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      modalImg.src = images[currentIndex];
+    }
+
+    mediaBlocks.forEach((block, index) => {
+      if (block.dataset.img) {
+        block.style.cursor = "pointer";
+        block.addEventListener("click", () => openModal(index));
+      }
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+    nextBtn.addEventListener("click", showNext);
+    prevBtn.addEventListener("click", showPrev);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (!modal.classList.contains("open")) return;
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowRight") showNext();
+      if (e.key === "ArrowLeft") showPrev();
+    });
+  }
+
+  // ===== STEP 3 SLIDERS =====
+  function supportsIO() {
+    return "IntersectionObserver" in window;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".step3-slider").forEach((slider) => {
+      const track = slider.querySelector(".step3-slider-track");
+      const slides = slider.querySelectorAll(".step3-slide");
+      const prev = slider.querySelector(".step3-slider-btn.prev");
+      const next = slider.querySelector(".step3-slider-btn.next");
+
+      if (!track || slides.length === 0) return;
+
+      let index = 0;
+
+      const update = () => {
+        track.style.transform = `translateX(-${index * 100}%)`;
+      };
+
+      next?.addEventListener("click", () => {
+        index = (index + 1) % slides.length;
+        update();
+      });
+
+      prev?.addEventListener("click", () => {
+        index = (index - 1 + slides.length) % slides.length;
+        update();
+      });
+    });
+
+    // ===== PROJECTS CAROUSEL =====
+    const viewport = document.querySelector("#projects .projects-viewport");
+    if (viewport) {
+      const stage = viewport.querySelector(".projects-stage");
+      if (stage) {
+        const cards = Array.from(stage.querySelectorAll(".project-card"));
+        if (cards.length) {
+          const dotsWrap = viewport.querySelector(".pr-dots");
+          const prevBtn = viewport.querySelector(".prev");
+          const nextBtn = viewport.querySelector(".next");
+
+          if (dotsWrap) {
+            let i = 0;
+            let timer = null;
+            const interval = +(viewport.dataset.interval || 5000);
+            const autoplay = viewport.dataset.autoplay !== "false";
+            const reduce =
+              window.matchMedia &&
+              window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            dotsWrap.innerHTML = cards.map(() => "<i></i>").join("");
+            const dots = Array.from(dotsWrap.children);
+
+            const show = (idx) => {
+              i = (idx + cards.length) % cards.length;
+              cards.forEach((c, k) => c.classList.toggle("is-active", k === i));
+              dots.forEach((d, k) => d.classList.toggle("is-on", k === i));
+            };
+
+            const next = () => show(i + 1);
+            const prev = () => show(i - 1);
+
+            const stop = () => {
+              if (timer) {
+                clearInterval(timer);
+                timer = null;
+              }
+            };
+
+            const play = () => {
+              if (reduce || !autoplay) return;
+              stop();
+              timer = setInterval(next, interval);
+            };
+
+            show(0);
             play();
-          } else {
-            stop();
+
+            nextBtn &&
+              nextBtn.addEventListener("click", () => {
+                next();
+                play();
+              });
+
+            prevBtn &&
+              prevBtn.addEventListener("click", () => {
+                prev();
+                play();
+              });
+
+            dotsWrap.addEventListener("click", (e) => {
+              const idx = dots.indexOf(e.target);
+              if (idx > -1) {
+                show(idx);
+                play();
+              }
+            });
+
+            viewport.addEventListener("mouseenter", stop);
+            viewport.addEventListener("mouseleave", play);
+            viewport.addEventListener("focusin", stop);
+            viewport.addEventListener("focusout", play);
+
+            if (supportsIO()) {
+              const sectionObserver = new IntersectionObserver(
+                (entries) => {
+                  entries.forEach((entry) => {
+                    if (entry.target !== viewport) return;
+                    if (entry.isIntersecting) {
+                      play();
+                    } else {
+                      stop();
+                    }
+                  });
+                },
+                { threshold: 0.2 }
+              );
+              sectionObserver.observe(viewport);
+            }
           }
-        });
-      },
-      { threshold: 0.2 }
-    );
-    sectionObserver.observe(viewport);
+        }
+      }
+    }
+  });
+
+  // ===== PERFORMANCE: Lazy Load Images =====
+  if ("IntersectionObserver" in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          if (img.dataset.src && !img.src) {
+            img.src = img.dataset.src;
+            img.removeAttribute("data-src");
+          }
+          observer.unobserve(img);
+        }
+      });
+    });
+
+    document.querySelectorAll("img[data-src]").forEach((img) => {
+      imageObserver.observe(img);
+    });
   }
 })();
+
+// ===== ANALYTICS LOADING =====
+function loadYandexMetrika() {
+  (function (m, e, t, r, i, k, a) {
+    m[i] =
+      m[i] ||
+      function () {
+        (m[i].a = m[i].a || []).push(arguments);
+      };
+    m[i].l = 1 * new Date();
+    for (var j = 0; j < document.scripts.length; j++) {
+      if (document.scripts[j].src === r) return;
+    }
+    (k = e.createElement(t)),
+      (a = e.getElementsByTagName(t)[0]),
+      (k.async = 1),
+      (k.src = r),
+      a.parentNode.insertBefore(k, a);
+  })(
+    window,
+    document,
+    "script",
+    "https://mc.yandex.ru/metrika/tag.js",
+    "ym"
+  );
+  try {
+    ym(16707172, "init", {
+      webvisor: true,
+      clickmap: true,
+      accurateTrackBounce: true,
+      trackLinks: true,
+    });
+  } catch (e) {
+    console.warn("Yandex Metrika failed to initialize");
+  }
+}
+
+function loadGTM() {
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l !== "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-KRVNNK");
+}
+
+window.addEventListener("load", () => {
+  setTimeout(loadYandexMetrika, 3000);
+  setTimeout(loadGTM, 4000);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const collageItems = document.querySelectorAll(".step3-collage .collage-item");
+
+  const EMOJIS = ["🍬", "🍭", "🍫", "✨", "🎁"];
+
+  collageItems.forEach(item => {
+    item.style.position = "relative";
+
+    item.addEventListener("click", (e) => {
+      const rect = item.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      // Теперь конфет намного больше
+      const count = 20 + Math.floor(Math.random() * 12);
+
+      for (let i = 0; i < count; i++) {
+        const candy = document.createElement("span");
+        candy.className = "candy-fall";
+        candy.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+
+        // Гораздо более мощный разлет (пышнее)
+        const dx = (Math.random() - 0.5) * 240;  // горизонталь: −120 .. +120
+        const dy = 80 + Math.random() * 120;    // вниз: 80–200px
+        const rot = `${(Math.random() - 0.5) * 720}deg`; // до 720° вращения
+
+        // Передаём параметры в CSS
+        candy.style.setProperty("--dx", `${dx}px`);
+        candy.style.setProperty("--dy", `${dy}px`);
+        candy.style.setProperty("--rot", rot);
+
+        // Мини-рандом по стартовой позиции
+        candy.style.left = `${clickX + (Math.random() - 0.5) * 20}px`;
+        candy.style.top = `${clickY + (Math.random() - 0.5) * 20}px`;
+
+        // Рандомная задержка – чтобы "взрыв" был живым
+        candy.style.animationDelay = `${Math.random() * 0.15}s`;
+
+        // Разная длительность падения
+        candy.style.animationDuration = `${0.9 + Math.random() * 0.9}s`;
+
+        item.appendChild(candy);
+
+        candy.addEventListener("animationend", () => candy.remove());
+      }
+    });
+  });
+});

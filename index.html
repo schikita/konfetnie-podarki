@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <title>Новогодняя фабрика конфет — как собирают подарки</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Google Fonts -->
+    <!-- Google Fonts с оптимизацией -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -26,12 +26,12 @@
                 </a>
             </div>
             <nav class="nav-links" id="navLinks">
-                <a href="#hero" class="nav-link">ШАГ 1: осваиваем технологию</a>
-                <a href="#steps" class="nav-link">ШАГ 2: боремся со «снегирями»</a>
-                <a href="#gallery" class="nav-link">ШАГ 3: наслаждаемся набором</a>
+                <a href="#step1" class="nav-link">ШАГ 1: осваиваем технологию</a>
+                <a href="#step2" class="nav-link">ШАГ 2: боремся со «снегирями»</a>
+                <a href="#step3" class="nav-link">ШАГ 3: наслаждаемся набором</a>
             </nav>
-            <button class="nav-burger" id="navBurger">
-                <span></span>
+            <button class="nav-burger" id="navBurger">🍬</button>
+
             </button>
         </div>
     </header>
@@ -73,22 +73,20 @@
             </div>
         </section>
 
+        <!-- ШАГ 1: ОСВАИВАЕМ ТЕХНОЛОГИЮ -->
+        <section class="section-steps step-section step-1" id="step1">
+            <div class="step-bg-image" style="background-image: url('./assets/img/steps/step1.jpg');"></div>
+            <div class="step-overlay"></div>
 
-
-        <!-- STEPS / PROCESS -->
-        <section class="section-steps" id="steps">
             <div class="container reveal">
                 <div class="section-header">
-                    <div class="section-kicker">ШАГ 1:</div>
-                    <h2 class="section-title">осваиваем технологию</h2>
-                    <p class="section-subtitle"></p>
+                    <div class="section-kicker animate-in">ШАГ 1:</div>
+                    <h2 class="section-title animate-in" style="animation-delay: 0.1s;">осваиваем технологию</h2>
                 </div>
 
-                <div class="steps-grid steps-grid--split">
-                    <!-- Подблок 1 -->
-                    <article class="step-card step-card--split">
+                <div class="step-content">
+                    <div class="step-card step-card--left">
                         <div class="step-card-media" data-img="./assets/img/steps/step1.jpg"></div>
-
                         <div class="step-card-body">
                             <p class="step-text">
                                 Именно здесь, на специальном участке фабрики в эти недели рождаются новогодние сюрпризы
@@ -97,11 +95,10 @@
                                 из трех лент своя команда по 13 человек. Работают в три смены – даже ночью.
                             </p>
                         </div>
-                    </article>
+                    </div>
 
-                    <!-- Подблок 2 -->
-                    <article class="step-card step-card--split">
-                        <div class="step-card-media" data-img="./assets/img/steps/step2.jpg"></div>
+
+                    <div class="step-card step-card--right">
                         <div class="step-card-body">
                             <p class="step-text">
                                 Прежде чем самой стать за конвейер, разбираюсь, что к чему. Первая мастерица напоминает
@@ -114,57 +111,118 @@
                                 какао-продуктов.
                             </p>
                         </div>
-                    </article>
-
-                    <!-- Подблок 3 -->
-                    <article class="step-card step-card--split">
-                        <div class="step-card-media" data-img="./assets/img/steps/step3.jpg"></div>
-                        <div class="step-card-body">
-                            <p class="step-text">
-                                От обилия свертков глаза разбегаются, так и тянет попробовать хотя бы одну штучку. И
-                                вдруг выясняется: это не запрещено. Неужели сбылась детская мечта? Ага, как же - у
-                                новичка времени на дегустацию просто не хватает, а для старожилов искушение потеряло
-                                остроту.
-                            </p>
-                        </div>
-                    </article>
-
-                    <!-- Подблок 4 -->
-                    <article class="step-card step-card--split">
-                        <div class="step-card-media" data-img="./assets/img/steps/step4.jpg"></div>
-                        <div class="step-card-body">
-                            <p class="step-text">
-                                Любопытно, что сначала смена формирует легкие комплекты по 300 граммов, потом нагрузка
-                                постепенно растет. Самый тяжелый вариант – баул аж на три кило. Ну а мое задание на
-                                сегодня – килограммовый подарок, в который входит 21 позиция. Буду класть многими
-                                любимую конфету «Ромашка» – она есть в каждом наборе. По транспортеру одна за другой
-                                едут открытые упаковки. С глянцевых обложек за процессом внимательно наблюдает символ
-                                наступающего года – лошадь. Раз - и сладость опускается в коробку. Еще одна, третья,
-                                четвертая… Радуюсь, что у меня все отлично получается. Спойлер: рано радуюсь.
-                            </p>
-                        </div>
-                    </article>
+                        <div class="step-card-media" data-img="./assets/img/steps/step2.jpg"></div>
+                    </div>
                 </div>
+                <!-- ОДНА АУДИОДОРОЖКА -->
+                <audio id="audio1" preload="metadata">
+                    <source src="./assets/sounds/speak.ogg" type="audio/ogg">
+                    <source src="./assets/sounds/speak.mp3" type="audio/mpeg">
+                </audio>
+
             </div>
         </section>
 
 
-        <!-- FADE SLIDER: FACTORY SCENES -->
-        <section class="section-fade-slider">
-            <div class="container reveal">
-                <div class="section-header">
-                    <div class="section-kicker">ШАГ 2: </div>
-                    <h2 class="section-title">боремся со «снегирями»</h2>
-                    <p class="section-subtitle">
 
+        <section class="section step3-text-section">
+            <div class="container">
+                <div class="step3-text-card reveal">
+                    <p>
+                        От обилия свертков глаза разбегаются, так и тянет попробовать хотя бы одну штучку. И вдруг
+                        выясняется: это не запрещено. Неужели сбылась детская мечта? Ага, как же - у новичка времени на
+                        дегустацию просто не хватает, а для старожилов искушение потеряло остроту.
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Любопытно, что сначала смена формирует легкие комплекты по 300 граммов, потом нагрузка
+                        постепенно растет. Самый тяжелый вариант – баул аж на три кило. Ну а мое задание на сегодня –
+                        килограммовый подарок, в который входит 21 позиция. Буду класть многими любимую конфету
+                        «Ромашка» – она есть в каждом наборе. По транспортеру одна за другой едут открытые упаковки. С
+                        глянцевых обложек за процессом внимательно наблюдает символ наступающего года – лошадь. Раз - и
+                        сладость опускается в коробку. Еще одна, третья, четвертая… Радуюсь, что у меня все отлично
+                        получается. Спойлер: рано радуюсь.
                     </p>
                 </div>
+
+                <!-- КОЛЛАЖ -->
+                <div class="step3-collage reveal">
+
+                    <div class="collage-item collage-large">
+                        <img src="./assets/img/happy/01.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item">
+                        <img src="./assets/img/happy/02.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item">
+                        <img src="./assets/img/happy/03.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item collage-tall">
+                        <img src="./assets/img/happy/04.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item">
+                        <img src="./assets/img/happy/05.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item">
+                        <img src="./assets/img/happy/07.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item collage-wide">
+                        <img src="./assets/img/happy/06.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item">
+                        <img src="./assets/img/happy/10.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item">
+                        <img src="./assets/img/happy/09.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item collage-tall">
+                        <img src="./assets/img/happy/08.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item">
+                        <img src="./assets/img/happy/11.jpg" alt="">
+                    </div>
+
+                    <div class="collage-item">
+                        <img src="./assets/img/happy/12.jpg" alt="">
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+
+
+
+        <!-- ШАГ 2: БОРЕМСЯ СО «СНЕГИРЯМИ» -->
+        <section class="section-steps step-section step-2" id="step2">
+            <div class="step-bg-image" style="background-image: url('./assets/img/bird/bird1.jpg');"></div>
+            <div class="step-overlay"></div>
+
+            <div class="container reveal">
+                <div class="section-header">
+                    <div class="section-kicker animate-in">ШАГ 2:</div>
+                    <h2 class="section-title animate-in" style="animation-delay: 0.1s;">боремся со «снегирями»</h2>
+                </div>
+
                 <div class="fade-slider" id="fadeSlider">
                     <div class="fade-slider-inner">
+                        <!-- Слайд 1 -->
                         <article class="fade-slide active" data-index="0">
                             <div class="fade-slide-media">
-                                <img loading="lazy" src="./assets/img/bird/bird1.jpg"
-                                    alt="Растапливание шоколада в котлах" />
+                                <img loading="lazy" src="./assets/img/bird/bird1.jpg" alt="Фабрика конфет" />
                             </div>
                             <div class="fade-slide-content">
                                 <p class="fade-slide-text">
@@ -178,12 +236,13 @@
                                     что остальные без суеты продолжают свое дело!</div>
                             </div>
                         </article>
+
+                        <!-- Слайд 2 -->
                         <article class="fade-slide" data-index="1">
                             <div class="fade-slide-media">
-                                <img loading="lazy" src="./assets/img/bird/bird2.jpg" alt="Формы для конфет" />
+                                <img loading="lazy" src="./assets/img/bird/bird2.jpg" alt="Работа на конвейере" />
                             </div>
                             <div class="fade-slide-content">
-
                                 <p class="fade-slide-text">
                                     Что тут говорить – опыт. Многие фасуют конфеты годами, как моя соседка по ленте
                                     бригадир Елена Малько. В этом сезоне Елене доверили взвешивание – самую
@@ -192,16 +251,16 @@
                                     ошибка. Но никто и не думает ругаться.
                                     – Поначалу промахи у всех были, привыкнешь, - подбадривает напарница Людмила
                                     Свинтилова. – Повезло, что набор легкий, у каждой всего пара конфет.
-
                                 </p>
-                                <div class="fade-slide-meta"> А в больших
+                                <div class="fade-slide-meta">А в больших
                                     баулах состав куда разнообразнее.</div>
                             </div>
                         </article>
+
+                        <!-- Слайд 3 -->
                         <article class="fade-slide" data-index="2">
                             <div class="fade-slide-media">
-                                <img loading="lazy" src="./assets/img/bird/bird3.jpg"
-                                    alt="Упаковка коробок с конфетами" />
+                                <img loading="lazy" src="./assets/img/bird/bird3.jpg" alt="Упаковка конфет" />
                             </div>
                             <div class="fade-slide-content">
                                 <p class="fade-slide-text">
@@ -209,15 +268,15 @@
                                     конца смены осталось 15 минут – нужно закрыть норму. Все еще пытаюсь подстроиться
                                     под ритм, но фабричная волна так и не поддается.
                                 </p>
-                                <div class="fade-slide-meta"> Последний кулек уходит по
+                                <div class="fade-slide-meta">Последний кулек уходит по
                                     транспортеру – наконец, выдыхаю.</div>
                             </div>
                         </article>
 
-                        <article class="fade-slide" data-index="2">
+                        <!-- Слайд 4 -->
+                        <article class="fade-slide" data-index="3">
                             <div class="fade-slide-media">
-                                <img loading="lazy" src="./assets/img/bird/bird4.jpg"
-                                    alt="Упаковка коробок с конфетами" />
+                                <img loading="lazy" src="./assets/img/bird/bird4.jpg" alt="Финальная упаковка" />
                             </div>
                             <div class="fade-slide-content">
                                 <p class="fade-slide-text">
@@ -227,17 +286,19 @@
                                     стопки упаковки, чтобы следующей бригаде было удобно начинать. На соседней линии уже
                                     перенимают эстафету: раскладывают фигурки Дедов Морозов.
                                 </p>
-                                <div class="fade-slide-meta"> Говорят, с ними хлопот
+                                <div class="fade-slide-meta">Говорят, с ними хлопот
                                     больше. «Куда уж больше?!» – вопрошаю про себя.</div>
                             </div>
                         </article>
                     </div>
+
+                    <!-- Контролы слайдера -->
                     <div class="slider-controls">
                         <div class="slider-dots" id="fadeDots">
-                            <button class="slider-dot active" data-target="0"></button>
-                            <button class="slider-dot" data-target="1"></button>
-                            <button class="slider-dot" data-target="2"></button>
-                            <button class="slider-dot" data-target="3"></button>
+                            <button class="slider-dot active" data-target="0" aria-label="Слайд 1"></button>
+                            <button class="slider-dot" data-target="1" aria-label="Слайд 2"></button>
+                            <button class="slider-dot" data-target="2" aria-label="Слайд 3"></button>
+                            <button class="slider-dot" data-target="3" aria-label="Слайд 4"></button>
                         </div>
                         <div class="slider-buttons">
                             <button class="slider-btn" data-dir="prev" aria-label="Предыдущий кадр">‹</button>
@@ -248,21 +309,12 @@
             </div>
         </section>
 
-        <!-- GALLERY & CANDY CAROUSEL -->
-        <section class="section-gallery" id="gallery">
+        <!-- ШАГ 3: НАСЛАЖДАЕМСЯ НАБОРОМ -->
+        <section class="section-gallery" id="step3">
             <div class="container reveal">
                 <div class="section-header">
-                    <div class="section-kicker">ШАГ 3:</div>
-                    <h2 class="section-title">наслаждаемся набором</h2>
-                    <p class="section-subtitle">
-                        На этом моя работа окончена. Ухожу из цеха с волнительной мыслью: среди полутора миллионов
-                        новогодних коробочек будет несколько тех, куда я собственноручно положила угощение вместе с
-                        пожеланием счастливого Нового года. За день в цеху успевают собрать 14–16 тысяч наборов, но если
-                        попадаются сложные с большим весом, то около пяти тысяч. Обычно работу завершают до 25 декабря,
-                        однако спрос, как правило, корректирует планы – приходится делать новые партии. Выбор
-                        впечатляет: лаконичные картонные коробки, шкатулки с замочками, чемоданчики, бархатные мешочки,
-                        мягкие фигурки...
-                    </p>
+                    <div class="section-kicker animate-in">ШАГ 3:</div>
+                    <h2 class="section-title animate-in" style="animation-delay: 0.1s;">наслаждаемся набором</h2>
                 </div>
 
                 <div class="step3-wrapper">
@@ -289,9 +341,6 @@
                                         впечатляет: лаконичные картонные коробки, шкатулки с замочками, чемоданчики,
                                         бархатные мешочки, мягкие фигурки...
                                     </p>
-                                    <p class="step3-divider">
-                                        _______________________________________________________________
-                                    </p>
                                 </div>
                             </article>
 
@@ -299,19 +348,20 @@
                                 <div class="step3-slider step3-slider--fade-right">
                                     <div class="step3-slider-track">
                                         <figure class="step3-slide">
-                                            <img loading="lazy"
-                                                src="https://images.pexels.com/photos/2987780/pexels-photo-2987780.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                            <img loading="lazy" src="./assets/img/shag-3/1-1.jpg"
                                                 alt="Новогодний набор конфет на фоне ёлки">
                                         </figure>
                                         <figure class="step3-slide">
-                                            <img loading="lazy"
-                                                src="https://images.pexels.com/photos/2647934/pexels-photo-2647934.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                            <img loading="lazy" src="./assets/img/shag-3/1-2.jpg"
                                                 alt="Новогодние конфеты в блюде">
                                         </figure>
                                         <figure class="step3-slide">
-                                            <img loading="lazy"
-                                                src="https://images.pexels.com/photos/1666071/pexels-photo-1666071.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                            <img loading="lazy" src="./assets/img/shag-3/1-3.jpg"
                                                 alt="Конфеты и мандарины">
+                                        </figure>
+                                        <figure class="step3-slide">
+                                            <img loading="lazy" src="./assets/img/shag-3/1-4.jpg"
+                                                alt="Конфеты и подарок">
                                         </figure>
                                     </div>
                                     <button class="step3-slider-btn prev" aria-label="Предыдущий кадр">‹</button>
@@ -326,18 +376,19 @@
                                 <div class="step3-slider step3-slider--fade-left">
                                     <div class="step3-slider-track">
                                         <figure class="step3-slide">
-                                            <img loading="lazy"
-                                                src="https://images.pexels.com/photos/3271739/pexels-photo-3271739.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                            <img loading="lazy" src="./assets/img/shag-3/2-1.jpg"
                                                 alt="Набор шоколадных конфет">
                                         </figure>
                                         <figure class="step3-slide">
-                                            <img loading="lazy"
-                                                src="https://images.pexels.com/photos/247836/pexels-photo-247836.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                            <img loading="lazy" src="./assets/img/shag-3/2-2.jpg"
                                                 alt="Шоколадные конфеты крупным планом">
                                         </figure>
                                         <figure class="step3-slide">
-                                            <img loading="lazy"
-                                                src="https://images.pexels.com/photos/730805/pexels-photo-730805.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                            <img loading="lazy" src="./assets/img/shag-3/2-3.jpg"
+                                                alt="Пирожные и конфеты">
+                                        </figure>
+                                        <figure class="step3-slide">
+                                            <img loading="lazy" src="./assets/img/shag-3/2-4.jpg"
                                                 alt="Пирожные и конфеты">
                                         </figure>
                                     </div>
@@ -374,204 +425,140 @@
 
 
 
-        <!-- AUDIO ATMOSPHERE -->
-        <section class="section-audio" id="audio">
-            <div class="container reveal">
-                <div class="section-header">
-                    <div class="section-kicker">Звуки фабрики</div>
-                    <h2 class="section-title">Саундтрек новогоднего конвейера</h2>
-                    <p class="section-subtitle">
-                        Включите звуки цеха, шелест упаковки и лёгкую праздничную музыку — и получите своё
-                        мини-погружение в фабричную атмосферу.
-                    </p>
-                </div>
-                <div class="audio-grid">
-                    <article class="audio-card" data-audio-id="audio1">
-                        <div class="audio-wave"></div>
-                        <h3 class="audio-name">Конвейер конфет</h3>
-                        <div class="audio-meta">Ритм всей фабрики · механика и шорох упаковки</div>
-                        <div class="audio-controls-row">
-                            <button class="audio-btn" aria-label="Играть/пауза">▶</button>
-                            <input type="range" class="audio-slider" min="0" max="100" value="0" />
-                        </div>
-                    </article>
-                    <article class="audio-card" data-audio-id="audio2">
-                        <div class="audio-wave"></div>
-                        <h3 class="audio-name">Праздничный плейлист</h3>
-                        <div class="audio-meta">Лёгкие новогодние мотивы в фоновом режиме</div>
-                        <div class="audio-controls-row">
-                            <button class="audio-btn" aria-label="Играть/пауза">▶</button>
-                            <input type="range" class="audio-slider" min="0" max="100" value="0" />
-                        </div>
-                    </article>
-                    <article class="audio-card" data-audio-id="audio3">
-                        <div class="audio-wave"></div>
-                        <h3 class="audio-name">Ночная смена</h3>
-                        <div class="audio-meta">Приглушённый цех и далёкий гул упаковочных машин</div>
-                        <div class="audio-controls-row">
-                            <button class="audio-btn" aria-label="Играть/пауза">▶</button>
-                            <input type="range" class="audio-slider" min="0" max="100" value="0" />
-                        </div>
-                    </article>
-                </div>
-                <!-- Hidden audio elements -->
-                <audio id="audio1" preload="metadata">
-                    <source
-                        src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_93e2f74671.mp3?filename=industrial-conveyor-6104.mp3"
-                        type="audio/mpeg" />
-                </audio>
-                <audio id="audio2" preload="metadata">
-                    <source
-                        src="https://cdn.pixabay.com/download/audio/2021/09/30/audio_4f9d257a7b.mp3?filename=christmas-vibe-19139.mp3"
-                        type="audio/mpeg" />
-                </audio>
-                <audio id="audio3" preload="metadata">
-                    <source
-                        src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_4c1b2b85e8.mp3?filename=factory-noise-ambient-20374.mp3"
-                        type="audio/mpeg" />
-                </audio>
-            </div>
-        </section>
-
-
-
     </main>
 
     <section class="page projects-section" id="projects" aria-label="Живой репортаж — материалы">
-      <div class="projects-inner container">
+        <div class="projects-inner container">
 
-        <div class="section-header">
-          <h2 class="section-title text-pr">Живой репортаж — материалы</h2>
+            <div class="section-header">
+                <h2 class="section-title text-pr">Живой репортаж — материалы</h2>
+            </div>
+
+            <!-- Главный карусельный контейнер -->
+            <div class="projects-viewport" data-autoplay="true" data-interval="5000">
+
+                <!-- Слайдер -->
+                <div class="projects-stage">
+
+                    <a href="https://www.sb.by/sp/top-10-nachodok/" class="project-card">
+                        <img src="./assets/img/projects/first-collage.jpg" loading="lazy" alt="Кто такие споттеры?" />
+                        <div class="project-info">
+                            <h3>Необычный ТОП-10</h3>
+                        </div>
+                    </a>
+
+                    <a href="https://www.sb.by/sp/granica-s-litvoj/" class="project-card">
+                        <img src="./assets/img/projects/shlagbaum.jpg" loading="lazy" alt="Никогда не сдавайтесь!" />
+                        <div class="project-info">
+                            <h3>Пограничное расстройство</h3>
+                        </div>
+                    </a>
+
+                    <a href="https://www.sb.by/sp/issledovania-na-kraju-sveta/" class="project-card is-active">
+                        <img src="./assets/img/projects/hero123.jpg" loading="lazy" alt="Полярники" />
+                        <div class="project-info">
+                            <h3>Исследования на краю света</h3>
+                        </div>
+                    </a>
+
+                </div>
+
+                <!-- Контролы -->
+                <div class="projects-controls">
+                    <button class="pr-btn prev" aria-label="Назад">◀</button>
+                    <div class="pr-dots" aria-hidden="true"></div>
+                    <button class="pr-btn next" aria-label="Вперед">▶</button>
+                </div>
+
+            </div>
+
+            <!-- Кнопка "Все материалы" -->
+            <div class="projects-footer">
+                <a href="https://www.sb.by/articles/themes/spetsproekt-sb-nash-zhivoy-reportazh/"
+                    class="btn-all-projects">
+                    Смотреть все материалы
+                </a>
+            </div>
+
         </div>
 
-        <!-- Главный карусельный контейнер -->
-        <div class="projects-viewport" data-autoplay="true" data-interval="5000">
+        <!-- Футер внутри секции -->
+        <footer class="site-footer">
+            <div class="footer-credits">
+                <p>Автор: <strong>Валерия КУРНЕВИЧ</strong></p>
+            </div>
 
-          <!-- Слайдер -->
-          <div class="projects-stage">
+            <hr class="footer-divider" />
 
-            
-            <a href="https://www.sb.by/sp/top-10-nachodok/" class="project-card">
-              <img src="./assets/img/projects/first-collage.jpg" loading="lazy" alt="Кто такие споттеры?" />
-              <div class="project-info">
-                <h3>Необычный ТОП-10</h3>
-              </div>
-            </a>
-
-            <a href="https://www.sb.by/sp/granica-s-litvoj/" class="project-card">
-              <img src="./assets/img/projects/shlagbaum.jpg" loading="lazy" alt="Никогда не сдавайтесь!" />
-              <div class="project-info">
-                <h3>Пограничное расстройство</h3>
-              </div>
-            </a>
-
-            <a href="https://www.sb.by/sp/issledovania-na-kraju-sveta/" class="project-card is-active">
-              <img src="./assets/img/projects/hero123.jpg" loading="lazy" alt="Полярники" />
-              <div class="project-info">
-                <h3>Исследования на краю света</h3>
-              </div>
-            </a>
-
-
-
-          </div>
-
-          <!-- Контролы -->
-          <div class="projects-controls">
-            <button class="pr-btn prev" aria-label="Назад">◀</button>
-            <div class="pr-dots" aria-hidden="true"></div>
-            <button class="pr-btn next" aria-label="Вперед">▶</button>
-          </div>
-
-        </div>
-
-        <!-- Кнопка "Все материалы" -->
-        <div class="projects-footer">
-          <a href="https://www.sb.by/articles/themes/spetsproekt-sb-nash-zhivoy-reportazh/" class="btn-all-projects">
-            Смотреть все материалы
-          </a>
-        </div>
-
-      </div>
-
-      <!-- Футер внутри секции (как ты сделал) -->
-      <footer class="site-footer">
-        <div class="footer-credits">
-          <p>Автор: <strong>Валерия КУРНЕВИЧ</strong></p>
-        </div>
-
-        <hr class="footer-divider" />
-
-        <div class="footer-copy">© Издательский дом «Беларусь сегодня»</div>
-      </footer>
+            <div class="footer-copy">© Издательский дом «Беларусь сегодня»</div>
+        </footer>
     </section>
 
-    <button class="back-to-top" id="backToTop" aria-label="Наверх">↑</button>
+    <button class="back-to-top" id="backToTop" aria-label="Наверх">🍬</button>
 
     <!-- MODAL GALLERY -->
     <div id="photoModal" class="modal">
         <div class="modal-content">
             <button class="modal-close">×</button>
 
-            <img id="modalImage" src="" alt="photo" />
+            <img id="modalImage" src="" alt="Фотография" />
 
             <button class="modal-nav prev">‹</button>
             <button class="modal-nav next">›</button>
         </div>
     </div>
 
-
     <script src="./assets/js/main.js"></script>
-      <script>
-    function loadYandexMetrika() {
-      (function (m, e, t, r, i, k, a) {
-        m[i] =
-          m[i] ||
-          function () {
-            (m[i].a = m[i].a || []).push(arguments);
-          };
-        m[i].l = 1 * new Date();
-        for (var j = 0; j < document.scripts.length; j++) {
-          if (document.scripts[j].src === r) return;
+    <script>
+        function loadYandexMetrika() {
+            (function (m, e, t, r, i, k, a) {
+                m[i] =
+                    m[i] ||
+                    function () {
+                        (m[i].a = m[i].a || []).push(arguments);
+                    };
+                m[i].l = 1 * new Date();
+                for (var j = 0; j < document.scripts.length; j++) {
+                    if (document.scripts[j].src === r) return;
+                }
+                (k = e.createElement(t)),
+                    (a = e.getElementsByTagName(t)[0]),
+                    (k.async = 1),
+                    (k.src = r),
+                    a.parentNode.insertBefore(k, a);
+            })(
+                window,
+                document,
+                "script",
+                "https://mc.yandex.ru/metrika/tag.js",
+                "ym"
+            );
+            ym(16707172, "init", {
+                webvisor: true,
+                clickmap: true,
+                accurateTrackBounce: true,
+                trackLinks: true,
+            });
         }
-        (k = e.createElement(t)),
-          (a = e.getElementsByTagName(t)[0]),
-          (k.async = 1),
-          (k.src = r),
-          a.parentNode.insertBefore(k, a);
-      })(
-        window,
-        document,
-        "script",
-        "https://mc.yandex.ru/metrika/tag.js",
-        "ym"
-      );
-      ym(16707172, "init", {
-        webvisor: true,
-        clickmap: true,
-        accurateTrackBounce: true,
-        trackLinks: true,
-      });
-    }
 
-    function loadGTM() {
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-KRVNNK");
-    }
+        function loadGTM() {
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != "dataLayer" ? "&l=" + l : "";
+                j.async = true;
+                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, "script", "dataLayer", "GTM-KRVNNK");
+        }
 
-    window.addEventListener("load", () => {
-      setTimeout(loadYandexMetrika, 3000);
-      setTimeout(loadGTM, 4000);
-    });
-  </script>
+        window.addEventListener("load", () => {
+            setTimeout(loadYandexMetrika, 3000);
+            setTimeout(loadGTM, 4000);
+        });
+    </script>
 </body>
 
 </html>
