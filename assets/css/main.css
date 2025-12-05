@@ -615,22 +615,23 @@ section {
   z-index: 2;
 }
 
-/* КОЛЛАЖ — премиальная раскладка */
+/* КОЛЛАЖ — ПРОСТАЯ СЕТКА 4×3 */
 .step3-collage {
   margin-top: 2.8rem;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.2rem;
   position: relative;
 }
 
-/* Базовый элемент */
+/* Все элементы квадратные и одинаковые */
 .step3-collage .collage-item {
   overflow: hidden;
   border-radius: 1rem;
   box-shadow: var(--shadow-soft, 0 4px 20px rgba(0,0,0,0.18));
   background: #000;
   transition: transform .4s ease, box-shadow .4s ease;
+  aspect-ratio: 4 / 3; /* одинаковая пропорция для всех */
 }
 
 .step3-collage .collage-item:hover {
@@ -649,75 +650,39 @@ section {
   transform: scale(1.07);
 }
 
-/* Расширенные формы */
-.collage-large {
-  grid-column: span 3; 
-  grid-row: span 2;
-}
-
-.collage-tall {
-  grid-row: span 2;
-}
-
-.collage-wide {
-  grid-column: span 4;
-}
-
-/* Адаптив: планшет */
+/* ===== АДАПТИВ: ПЛАНШЕТ ===== */
 @media (max-width: 900px) {
   .step3-collage {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
-
-  .collage-large {
-    grid-column: span 3;
-    grid-row: span 1;
-  }
-
-  .collage-wide {
-    grid-column: span 3;
-  }
-
-  .collage-tall {
-    grid-row: span 1;
-  }
 }
 
-/* Адаптив: телефон */
+.step3-collage .collage-item,
+.step3-collage .collage-item.collage-large,
+.step3-collage .collage-item.collage-tall,
+.step3-collage .collage-item.collage-wide {
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+/* ===== АДАПТИВ: МОБИЛЬНЫЙ ===== */
 @media (max-width: 600px) {
   .step3-collage {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.8rem;
   }
-
-  .collage-large,
-  .collage-wide {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-
-  .collage-tall {
-    grid-row: span 1;
-  }
 }
 
-/* Очень маленькие экраны */
+/* ===== АДАПТИВ: МАЛЕНЬКИЕ ЭКРАНЫ ===== */
 @media (max-width: 420px) {
   .step3-collage {
     grid-template-columns: 1fr;
     gap: 0.7rem;
   }
-
-  .collage-large,
-  .collage-wide,
-  .collage-tall {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
 }
 
-/* Мощные конфетки, разлетающиеся шире */
+/* ===== КОНФЕТКИ РАЗЛЕТАЮТСЯ ===== */
 .candy-fall {
   position: absolute;
   font-size: 1.8rem;
@@ -740,6 +705,7 @@ section {
   }
 }
 
+/* ===== МОДАЛЬНОЕ ОКНО ===== */
 .collage-modal {
   display: none;
   position: fixed;
@@ -803,7 +769,6 @@ section {
     font-size: 2.2rem;
   }
 }
-
 
 
 
@@ -1226,6 +1191,14 @@ section {
     transform: translate3d(-10px, 0, 0) rotate(-6deg);
   }
 }
+
+/* 9-е и 10-е фото — горизонтальные */
+.step3-collage .collage-item:nth-child(9),
+.step3-collage .collage-item:nth-child(10) {
+  grid-column: span 2;
+  grid-row: span 1;   /* принудительно убираем вертикальное растягивание */
+}
+
 
 /* ===== AUDIO SECTION ===== */
 
